@@ -1,0 +1,38 @@
+server:
+  port: 8083
+
+app:
+  osm-file: classpath:osm-data.json
+  schedule-file: classpath:schedules.json
+spring:
+  application:
+    name: route-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  security:
+    debug: true
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/my-realm
+          jwk-set-uri: http://localhost:8180/realms/my-realm/protocol/openid-connect/certs
+  mvc:
+    log-request-details: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: TRACE
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework.security: DEBUG
+    Transport_Urbain_Microservices.user_service: DEBUG
+    org.hibernate.SQL: debug
